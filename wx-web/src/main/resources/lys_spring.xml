@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:task="http://www.springframework.org/schema/task"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+						http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+						http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <!--扫描注入-->
+    <context:component-scan base-package="com.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.RestController"/>
+        <!--<context:exclude-filter type="regex" expression="com.lin.data.mappers.AccountMapper"/>-->
+    </context:component-scan>
+    <!--加载配置文件-->
+    <bean class="com.lin.core.config.EncryptPropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:local.properties</value>
+                <value>classpath:redis.properties</value>
+                <value>classpath:zk.properties</value>
+            </list>
+        </property>
+        <property name="encryptPropNames">
+            <list>
+                <value>redis.pass</value>
+                <value>jdbc.password</value>
+            </list>
+        </property>
+    </bean>
+    <!--插入spring文件(●'◡'●)这块区域给spring连接池-->
+    <!--classpath* 加载jar包中的配置-->
+    <import resource="classpath*:spring-database/data_source.xml"/>
+
+    <!--插入spring文件(●'◡'●)这块区域给redis连接池-->
+    <!--改用bean配置 @see com.lin.redis.RedisIO-->
+    <!--<import resource="spring-database/redis.xml"/>-->
+
+    <!--阿里巴巴拦截器-->
+    <bean id="druid-stat-interceptor"
+          class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">
+    </bean>
+
+    <bean
+            class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="proxyTargetClass" value="true"/>
+        <property name="beanNames">
+            <list>
+                <value>*Service</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>druid-stat-interceptor</value>
+            </list>
+        </property>
+    </bean>
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+    <!-- 异常处理-->
+
+    <!--<bean id="exceptionResolver"-->
+    <!--class="com.shigu.resolver.ExceptionResolver">-->
+    <!--</bean>-->
+
+    <!-- 分布式锁的注入-->
+    <!--<bean id="retryPolicy" class="org.apache.curator.retry.ExponentialBackoffRetry">
+        <constructor-arg index="0" value="1000"/>
+        <constructor-arg index="1" value="3"/>
+    </bean>
+    <bean id="curatorFramework" class="org.apache.curator.framework.CuratorFrameworkFactory" factory-method="newClient"
+          init-method="start" destroy-method="close" >
+        <constructor-arg index="0" value="${zookeeper.host}:${zookeeper.port}"/>
+        <constructor-arg index="1" value="10000"/>
+        <constructor-arg index="2" value="6000"/>
+        <constructor-arg index="3" ref="retryPolicy"/>
+    </bean>-->
+    <!--转移到mvc配置中-->
+    <!--<mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="com.lin.interceptors.MySelfInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+
+
+    <!--添加dubbo服务-->
+    <!-- 添加shiro-->
+    <import resource="shiro/apache-shiro.xml"/>
+
+</beans>

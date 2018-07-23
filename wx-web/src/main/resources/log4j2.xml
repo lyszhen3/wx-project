@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration name="testConfiguration"
+               status="debug"
+               strict="true"
+               monitorInterval="30"
+               schema="Log4J-V2.0.xsd">
+
+    <!--<properties>-->
+    <!--<property name="filters">org.apache</property>-->
+    <!--</properties>-->
+    <properties>
+        <property name="path">${log4j:configParentLocation}/applogs/</property>
+        <!--<property name="path">${web:contextPath}/applogs/</property>-->
+    </properties>
+
+    <Appenders>
+        <RollingRandomAccessFile name="sqllog" fileName="${path}/mysql.log"
+                                 filePattern="%d{yyyy.MM}.log" Append="true" encoding="UTF-8">
+            <PatternLayout charset="utf-8" pattern="%d{yyyy/MM/dd HH:mm:ss} %p %C  %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1"
+                                           modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="Daijia" fileName="${path}/root.log"
+                     filePattern="${path}/root%d{yyyy-MM}.log" Append="true" encoding="UTF-8">
+            <PatternLayout charset="utf-8" pattern="%d{yyyy/MM/dd HH:mm:ss} %p %C  %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+            <DefaultRolloverStrategy fileIndex="min" max="16"/>
+            <RegexFilter regex="com.lin.data" onMatch="DENY" onMismatch="ACCEPT"/>
+        </RollingRandomAccessFile>
+
+        <RollingRandomAccessFile name="info" fileName="${path}/info.log"
+                     filePattern="${path}/root%d{yyyy-MM}.log" Append="true" encoding="UTF-8">
+            <PatternLayout charset="utf-8" pattern="%d{yyyy/MM/dd HH:mm:ss} %p %C  %m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+            <DefaultRolloverStrategy fileIndex="min" max="16"/>
+            <Filters>
+                <!--只接受info级别 -->
+                <!-- DENY，日志将立即被抛弃不再经过其他过滤器；
+                      NEUTRAL，有序列表里的下个过滤器过接着处理日志；
+                      ACCEPT，日志会被立即处理，不再经过剩余过滤器。 -->
+                <ThresholdFilter level="warn" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+        </RollingRandomAccessFile>
+
+
+        <Console name="STDOUT" target="SYSTEM_OUT"  >
+            <PatternLayout  pattern="%d{yyyy/MM/dd HH:mm:ss} %p %C  %m%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+
+        <Root level="DEBUG">
+            <AppenderRef ref="Daijia"/>
+            <AppenderRef ref="info" />
+        </Root>
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT"/>
+        </Root>
+
+        <!--<Logger name="org.apache" level="info" />-->
+        <!--<Logger name="org.springframework" level="debug"  />-->
+        <Logger name="com.lin.data.mappers" level="debug" additivity="false">
+            <AppenderRef ref="sqllog"/>
+            <AppenderRef ref="STDOUT"/>
+        </Logger>
+
+
+    </Loggers>
+
+
+</Configuration>
