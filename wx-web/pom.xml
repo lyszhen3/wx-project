@@ -277,11 +277,6 @@
             <version>2.0.0</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>myWeb</groupId>
-            <artifactId>demo_api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <!-- dubbo-->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -381,7 +376,7 @@
         <!--</dependency>-->
 
         <dependency>
-            <groupId>myWeb</groupId>
+            <groupId>org.lys</groupId>
             <artifactId>image</artifactId>
             <version>${project.version}</version>
             <!--<optional>true</optiona3.1-->
