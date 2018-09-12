@@ -22,7 +22,7 @@ import java.util.*;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.lin.**.*controllers")
+@ComponentScan(basePackages = "com.lin.**.*controller")
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
 

@@ -125,6 +125,7 @@ public class RSAUtil {
 		return null;
 	}
 
+	@SuppressWarnings("Duplicates")
 	private static String getPublickEncode() {
 		ClassPathResource classPathResource = new ClassPathResource("/rsakey/public.key");
 		String readLine;
@@ -140,6 +141,7 @@ public class RSAUtil {
 		}
 		return null;
 	}
+	@SuppressWarnings("Duplicates")
 	private static String getPrivateEncode(){
 		ClassPathResource classPathResource = new ClassPathResource("/rsakey/private.key");
 		String readLine;
