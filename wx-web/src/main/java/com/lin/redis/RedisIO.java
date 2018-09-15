@@ -276,6 +276,16 @@ public class RedisIO {
 
     }
 
+    public String setKey(String key,String value,int expire){
+        Jedis jedis = getJedis();
+        try {
+            String result = jedis.set(key, value);
+            jedis.expire(key, expire);
+            return result;
+        }finally {
+            returnJedis(jedis);
+        }
+    }
 
 //    @Override
 //    protected void finalize() throws Throwable {

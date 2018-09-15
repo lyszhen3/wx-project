@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
-@RequestMapping("/wxconfig")
+@RequestMapping("/wx")
 public class HelloController {
 
     @RequestMapping("/fuck")
