@@ -14,11 +14,15 @@ import javax.servlet.http.HttpServletResponse;
  * @description
  * @since 3.0.0-SNAPSHOT
  */
-public class MySelfInterceptor implements HandlerInterceptor{
+public class WxInterceptor implements HandlerInterceptor{
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse httpServletResponse, Object o) throws Exception {
         System.out.println("到拦截器了");
-        return true;
+
+        String signature = request.getParameter("signature");
+        String timestamp = request.getParameter("timestamp");
+        String nonce = request.getParameter("nonce");
+        return signature != null && CheckoutUtil.checkSignature(signature, timestamp, nonce);
     }
 
     @Override

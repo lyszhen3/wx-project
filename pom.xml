@@ -61,9 +61,7 @@
                 <configuration>
                     <useBodyEncodingForURI>true</useBodyEncodingForURI>
                     <url>http://118.31.45.164/manager/text</url>
-                    <!--<server>alibabaecs.deploy</server>-->
-                    <username>tomcat</username>
-                    <password>tomcat@alibabaecs</password>
+                    <server>alibabaecs.deploy</server>
                     <update>true</update>
                     <path>/${project.build.finalName}</path>
                 </configuration>

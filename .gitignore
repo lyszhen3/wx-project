@@ -50,4 +50,5 @@ Temporary Items
 *.iml
 target/
 rsakey/
+wxconfig/
 

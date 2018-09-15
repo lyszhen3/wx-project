@@ -1,7 +1,7 @@
 package com.lin.core.config;
 
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.lin.interceptors.MySelfInterceptor;
+import com.lin.interceptors.WxInterceptor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -141,7 +141,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 //	}
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor( new MySelfInterceptor());
+		registry.addInterceptor( new WxInterceptor()).addPathPatterns("/wxconfig/**");
 	}
 	//方法验证 验证不是对象的参数
 	@Bean

@@ -9,8 +9,10 @@
     <!--<property name="filters">org.apache</property>-->
     <!--</properties>-->
     <properties>
-        <property name="path">${log4j:configParentLocation}/applogs/</property>
+        <!--<property name="path">${log4j:configParentLocation}/applogs/</property>-->
         <!--<property name="path">${web:contextPath}/applogs/</property>-->
+
+        <property name="path">${sys:catalina.home}/logs/wx</property>
     </properties>
 
     <Appenders>
@@ -32,7 +34,7 @@
                 <SizeBasedTriggeringPolicy size="1MB"/>
             </Policies>
             <DefaultRolloverStrategy fileIndex="min" max="16"/>
-            <RegexFilter regex="com.lin.data" onMatch="DENY" onMismatch="ACCEPT"/>
+            <!--<RegexFilter regex="com.lin.data" onMatch="DENY" onMismatch="ACCEPT"/>-->
         </RollingRandomAccessFile>
 
         <RollingRandomAccessFile name="info" fileName="${path}/info.log"
@@ -59,20 +61,21 @@
     </Appenders>
     <Loggers>
 
-        <Root level="DEBUG">
+        <Root level="WARN">
             <AppenderRef ref="Daijia"/>
-            <AppenderRef ref="info" />
-        </Root>
-        <Root level="INFO">
             <AppenderRef ref="STDOUT"/>
+            <!--<AppenderRef ref="info" />-->
         </Root>
+        <!--<Root level="INFO">-->
+            <!--<AppenderRef ref="STDOUT"/>-->
+        <!--</Root>-->
 
         <!--<Logger name="org.apache" level="info" />-->
         <!--<Logger name="org.springframework" level="debug"  />-->
-        <Logger name="com.lin.data.mappers" level="debug" additivity="false">
-            <AppenderRef ref="sqllog"/>
-            <AppenderRef ref="STDOUT"/>
-        </Logger>
+        <!--<Logger name="com.lin.data.mappers" level="debug" additivity="false">-->
+            <!--<AppenderRef ref="sqllog"/>-->
+            <!--<AppenderRef ref="STDOUT"/>-->
+        <!--</Logger>-->
 
 
     </Loggers>

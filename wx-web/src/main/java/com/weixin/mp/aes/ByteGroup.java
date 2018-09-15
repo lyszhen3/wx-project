@@ -1,4 +1,4 @@
-package com.qq.weixin.mp.aes;
+package com.weixin.mp.aes;
 
 import java.util.ArrayList;
 

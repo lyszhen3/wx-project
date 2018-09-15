@@ -27,6 +27,7 @@
                 <value>classpath:local.properties</value>
                 <value>classpath:redis.properties</value>
                 <value>classpath:zk.properties</value>
+                <value>classpath:wxconfig/wx.properties</value>
             </list>
         </property>
         <property name="encryptPropNames">
@@ -86,8 +87,7 @@
     <!--<mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/*"/>
-            <bean class="com.lin.interceptors.MySelfInterceptor"/>
-        </mvc:interceptor>
+            <bean class="com.lin.interceptors.WxInterceptor        </mvc:interceptor>
     </mvc:interceptors>-->
 
 
